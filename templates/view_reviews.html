@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews - Dream House Architecture</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>Leave a Review</h2>
+    <div class="review-form">
+      <form action="/submit_review" method="POST">
+        <textarea name="review" placeholder="Share your experience with Dream House Architecture..." required></textarea>
+        <button type="submit" class="btn">Submit Review</button>
+      </form>
+    </div>
+
+    <hr>
+
+    <h2>Customer Reviews</h2>
+    <ul class="reviews-list">
+      {% for review in reviews %}
+        <li class="review-card">
+          <p class="review-text">{{ review['text'] }}</p>
+          <!-- <p class="review-meta">Posted on {{ review['date'] }}</p> -->
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from db import db, users_collection
+from home import review_bp
 
 from home import home_bp  # ✅ Import your blueprint
 
@@ -84,6 +85,7 @@ def logout():
 
 # ✅ Register the blueprint
 app.register_blueprint(home_bp)
+app.register_blueprint(review_bp) 
 
 if __name__ == '__main__':
     app.run(debug=True)

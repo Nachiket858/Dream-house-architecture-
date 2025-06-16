@@ -6,6 +6,7 @@ import base64
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+from db import reviews_collection
 
 load_dotenv()
 home_bp = Blueprint('home_bp', __name__)
@@ -111,3 +112,24 @@ def home():
         image_data=generated_image,
         user_designs=user_designs
     )
+
+
+
+from flask import Blueprint, render_template, request, redirect
+from db import reviews_collection
+
+review_bp = Blueprint('review_bp', __name__)
+
+# Route to display all reviews
+@review_bp.route('/reviews')
+def view_reviews():
+    all_reviews = list(reviews_collection.find())
+    return render_template('view_reviews.html', reviews=all_reviews)
+
+# Route to submit a review
+@review_bp.route('/submit_review', methods=['POST'])
+def submit_review():
+    review_text = request.form['review']
+    if review_text.strip():
+        reviews_collection.insert_one({'text': review_text})
+    return redirect('/reviews')
